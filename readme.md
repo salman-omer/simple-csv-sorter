@@ -1,2 +1,2 @@
-Asst0
-Systems Programming - First Project
+# Systems Programming - First Project: Asst0
+BY: Salman K. Omer & Seyeon (Shane) Park
