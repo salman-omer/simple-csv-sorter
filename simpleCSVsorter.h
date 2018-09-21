@@ -6,7 +6,8 @@
 *
 ******/
 
-#ifndef simpleCSVsorter.h
+#ifndef simpleCSVsorter_h
+#define simpleCSVsorter_h
 
 //Suggestion: define a struct that mirrors a record (row) of the data set
 
