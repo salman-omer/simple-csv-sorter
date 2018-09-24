@@ -30,7 +30,7 @@ main(int argc, char *argv[]){
 
             //testing sorting with small inputs - int
 //            int arr[] = {100, 12, 11, 13, 5, 6, 7};
-            char *arr[] = {"James Cameron", "Gore Verbinski", "Sam Mendes", "Christopher Nolan", "Doug Walker"};
+            char *arr[] = {"James Cameron", "Gore Verbinski", "Sam Mendes", "Christopher Nolan", "Doug Walker", "Andrew Stanton", "Sam Raimi"};
             int arr_size = sizeof(arr)/sizeof(arr[0]);
 
             printf("Given array is \n");
