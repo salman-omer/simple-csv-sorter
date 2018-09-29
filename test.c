@@ -3,15 +3,19 @@
 #include <string.h>
 #include <math.h>
 
-const int DEBUG = 0;
+const int DEBUG = 1;
 const int DEBUG2 = 0;
 
-// cacheline node node for singly linked LL
-typedef struct cacheLine{
-	long int tag;
-	long int address;
-	struct cacheLine *next;
-} cacheLine;
+typedef struct  _movieLine{
+	char* color;
+	char* director_name;
+	int* num_critic_for_reviews;
+	int* duration;
+	int* director_facebook_likes;
+
+} movieLine;
+	
+
 
 int main(int argc, char **argv){
 
@@ -22,11 +26,31 @@ int main(int argc, char **argv){
 
 	if(DEBUG){ printf("initiliazed\n"); }
 
+
+	//FILE* input = stdin;
+	
+	char line[2000];
+	char buffer;
+	int lineCounter = 0;
+	if(DEBUG) { printf("Will now read in lines\n"); }
+	read(0, &buffer, 1);
+	while(buffer != '\n'){
+		printf("%c", buffer);
+		line[lineCounter] = buffer;
+		lineCounter++;
+		read(0, &buffer, 1);
+	}
+	printf("\n");
+	line[lineCounter] = '\0';
+	//printf(line + '\n');
+	printf("%s \n", line);
+	printf("Output as shown with %d characters %c \n", lineCounter, line[lineCounter]);
+	/*
 	FILE *fileInput;
 	fileInput = stdin;
 	
 	// if file does not exist
-	if(!fileInput){
+	if(feof(fileInput)){
 		printf("error, no stdin\n");
 		return 0;
 	}
@@ -39,6 +63,8 @@ int main(int argc, char **argv){
 
 	// reset file
 	fclose(fileInput);
+	*/
+
 
 	return 0;
 
