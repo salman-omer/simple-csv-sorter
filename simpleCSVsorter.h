@@ -13,8 +13,12 @@
 
 
 //Suggestion: prototype a mergesort function
+void mergeSort(struct movieLine** ptrHead, char *strInput, double numInput);
+
+/*
 void numMergeSort(int arr[], int l, int r);     //mergeSort for int array
 
 void strMergeSort(char *arr[], int l, int r);   //mergeSort for string array
+*/
 
 #endif // simpleCSVsorter

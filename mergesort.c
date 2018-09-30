@@ -2,6 +2,99 @@
 #include <stdlib.h>
 #include <string.h>
 
+//sorts the csv linked list - recursive fn
+void mergeSort(struct movieLine** ptrHead, char *strInput, double numInput)
+{
+    struct movieLine* head = ptrHead;
+    struct movieLine* x;
+    struct movieLine* y;
+
+    if (head == NULL || head->next == NULL)     //base case for recursive call
+    {
+        return;
+    }
+
+    split(head, &x, &y);
+
+    mergeSort(&x, strInput, numInput);      //recursive call on mergeSort for each parts
+    mergeSort(&y, strInput, numInput);
+
+    *source = merge(x, y);
+}
+
+struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput, double numInput)
+{
+    struct movieLine* result = NULL;
+
+    //recursive - base case
+    if (x == NULL)
+    {
+        return y;
+    }else if (y == NULL)
+    {
+        return x;
+    }
+
+    //check if sorting string types or number types
+    if (strInput == NULL)
+    {
+        if (x->numInput <= y->numInput)
+        {
+            result = x;
+            result->next = merge(x->next, y, strInput, numInput);
+        }else
+        {
+            result = y;
+            result->next = merge(x, y->next, strInput, numInput);
+        }
+    }else if (numInput == NULL)
+    {
+        if (strcmp(x->strInput, y->strInput) <= 0)
+        {
+            result = x;
+            result->next = merge(x->next, y, strInput, numInput);
+        }else
+        {
+            result = y;
+            result->next = merge(x, y->next, strInput, numInput);
+        }
+    }else
+    {
+        printf("TEMPORARY ERROR FLAG");
+    }
+
+    return result;
+};
+
+void split(struct movieLine* source, struct movieLine** ptrFront, struct movieLine** ptrBack)
+{
+    struct movieLine* fast;
+    struct movieLine* slow;
+
+    slow = source;
+    fast = source->next;
+
+    while(fast != NULL)     //move fast once and check if its not NULL
+    {
+        fast = fast->next;
+
+        if (fast != NULL)   //if fast != NULL then move both slow and fast once
+        {
+            slow = slow->next;
+            fast = fast->next;
+        }
+
+    }
+
+    *ptrFront = source;     // head/first node
+    *ptrBack = slow->next;  // starting node for second-half
+    slow->next = NULL;      //end partitioning
+}
+
+
+
+/*
+
 //For sorting numeric types
 //m = middleIndex
 void numMerge(int arr[], int l, int m, int r)
@@ -136,3 +229,5 @@ void strMergeSort(char *arr[], int l, int r)
         strMerge(arr, l, m, r);
     }
 }
+
+*/
