@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
 
 typedef enum { false, true } bool;
 
-const int DEBUG = 2;
+const int DEBUG = 0;
 const int DEBUG2 = 0;
 
 typedef struct  _movieLine{
@@ -37,6 +38,7 @@ typedef struct  _movieLine{
 	double imdb_score;
 	double aspect_ratio;
 	int movie_facebook_likes;
+	char* csvLine;
 	struct _movieLine* next;
 } movieLine;
 
@@ -77,6 +79,7 @@ int initMovieLine(movieLine* movie){
 	movie-> aspect_ratio = 0;
 	movie-> movie_facebook_likes = 0;
 	movie->next = NULL;
+	movie->csvLine = NULL;
 	return 0;
 }
 
@@ -300,26 +303,54 @@ int* printMovieLineAsCsv(movieLine* movie, int numColumns, char** columnNames){
 	printf("%s\n", line);
 	return 0;
 }
+*/
 
 int printMoviesAsCsv(movieLineLL* LL, int numColumns, char** columnNames){
+	int i;
+	for (i = 0; i < numColumns; ++i)
+	{
+		printf("%s", columnNames[i]);
+		if(i < numColumns - 1){
+			printf(",");
+		} else {
+			printf("\n");
+		}
+	}
 	movieLine* curr = LL->head;
 	while(curr != NULL){
-		printMovieLineAsCsv(curr, numColumns, columnNames);
+		if(curr->next != NULL){
+			if(curr->csvLine != NULL){
+				printf("%s\n", curr->csvLine);
+			}
+		} else {
+			if(curr->csvLine != NULL){
+				printf("%s", curr->csvLine);
+			}
+		}
 		curr = curr->next;
 	}
 	return 0;
-} */
+} 
 
 int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char* value){
+	// special case for csvline denoted by column number -1
+	if(columnNumber < 0){
+		movie->csvLine = malloc(sizeof(char) * (strlen(value) + 1));
+		strcpy(movie->csvLine, value);
+		if(DEBUG){ printf("Line added %s\n", movie->csvLine);} 
+		return 0;
+	}
+
+
 	char* columnName = columnNames[columnNumber];
-	if(DEBUG){ printf("value %s\n", value);}
+	if(DEBUG){ printf("value %s  at column %d\n", value, columnNumber);}
 	if (strcmp(columnName, "color") == 0){
-		movie->color = malloc(sizeof(char) * strlen(value));
+		movie->color = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->color, value);
 		if (DEBUG) { printf("%s %d %s\n", "color", columnNumber, value); }
 	}
 	else if (strcmp(columnName, "director_name") == 0){
-		movie->director_name = malloc(sizeof(char) * strlen(value));
+		movie->director_name = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->director_name, value);
 		if (DEBUG) { printf("%s %s\n", "director_name", value); }
 	}
@@ -340,7 +371,7 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %d\n", "actor_3_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_2_name") == 0){
-		movie->actor_2_name = malloc(sizeof(char) * strlen(value));
+		movie->actor_2_name = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->actor_2_name, value);
 		if (DEBUG) { printf("%s %s\n", "actor_2_name", value); }
 	}
@@ -354,17 +385,17 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %d\n", "gross", atoi(value)); }
 	}
 	else if (strcmp(columnName, "genres") == 0){
-		movie->genres = malloc(sizeof(char) * strlen(value));
+		movie->genres = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->genres, value);
 		if (DEBUG) { printf("%s %s\n", "genres", value); }
 	}
 	else if (strcmp(columnName, "actor_1_name") == 0){
-		movie->actor_1_name = malloc(sizeof(char) * strlen(value));
+		movie->actor_1_name = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->actor_1_name, value);
 		if (DEBUG) { printf("%s %s\n", "actor_1_name", value); }
 	}
 	else if (strcmp(columnName, "movie_title") == 0){
-		movie->movie_title = malloc(sizeof(char) * strlen(value));
+		movie->movie_title = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->movie_title, value);
 		if (DEBUG) { printf("%s %s\n", "movie_title", value); }
 	}
@@ -377,7 +408,7 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %d\n", "cast_total_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_3_name") == 0){
-		movie->actor_3_name = malloc(sizeof(char) * strlen(value));
+		movie->actor_3_name = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->actor_3_name, value);
 		if (DEBUG) { printf("%s %s\n", "actor_3_name", value); }
 	}
@@ -386,12 +417,12 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %d\n", "facenumber_in_poster", atoi(value)); }
 	}
 	else if (strcmp(columnName, "plot_keywords") == 0){
-		movie->plot_keywords = malloc(sizeof(char) * strlen(value));
+		movie->plot_keywords = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->plot_keywords, value);
 		if (DEBUG) { printf("%s %s\n", "plot_keywords", value); }
 	}
 	else if (strcmp(columnName, "movie_imdb_link") == 0){
-		movie->movie_imdb_link = malloc(sizeof(char) * strlen(value));
+		movie->movie_imdb_link = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->movie_imdb_link, value);
 		if (DEBUG) { printf("%s %s\n", "movie_imdb_link", value); }
 	}
@@ -400,17 +431,17 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %d\n", "num_user_for_reviews", atoi(value)); }
 	}
 	else if (strcmp(columnName, "language") == 0){
-		movie->language = malloc(sizeof(char) * strlen(value));
+		movie->language = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->language, value);
 		if (DEBUG) { printf("%s %s\n", "language", value); }
 	}
 	else if (strcmp(columnName, "country") == 0){
-		movie->country = malloc(sizeof(char) * strlen(value));
+		movie->country = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->country, value);
 		if (DEBUG) { printf("%s %s\n", "country", value); }
 	}
 	else if (strcmp(columnName, "content_rating") == 0){
-		movie->content_rating = malloc(sizeof(char) * strlen(value));
+		movie->content_rating = malloc(sizeof(char) * (strlen(value) + 1));
 		strcpy(movie->content_rating, value);
 		if (DEBUG) { printf("%s %s\n", "content_rating", value); }
 	}
@@ -441,6 +472,8 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 	return 0;
 }
 
+
+
 int main(int argc, char **argv){
 
 	if(argc <= 0){
@@ -459,13 +492,18 @@ int main(int argc, char **argv){
 	if(DEBUG) { printf("Reading in first line\n"); }
 	read(0, &buffer, 1);
 	while(buffer != '\n'){
-		printf("%c", buffer);
+		if(DEBUG){printf("%c", buffer);}
 		columnsLine[lineCounter] = buffer;
 		lineCounter++;
 		read(0, &buffer, 1);
 	}
-	printf("\n");
+	if(DEBUG){ printf("\n"); }
 	columnsLine[lineCounter] = '\0';
+	if(DEBUG){
+		if(columnsLine[lineCounter - 1] == '\n' || columnsLine[lineCounter] == '\n'){
+			printf("misplaced newline at the end of the columns string\n");
+		}
+	}
 	
 	// now want to parse the first line so that we know the number of columns
 	// number of columns = # of commas + 1
@@ -491,6 +529,7 @@ int main(int argc, char **argv){
 	for(i = 0; i < strlen(columnsLine); i++){
 		if(columnsLine[i] == ','){
 			columnNames[currColumnNum][currStringIndex] = '\0';
+			if(DEBUG){ printf("column name %s inserted into column names array\n", columnNames[currColumnNum]); }
 			currColumnNum++;
 			currStringIndex = 0;
 			continue;
@@ -499,8 +538,25 @@ int main(int argc, char **argv){
 		currStringIndex++;
 	}
 
+	columnNames[currColumnNum][currStringIndex - 1] = '\0';
+
+
+	if(DEBUG){ 
+		printf("Last columnName is: %s\n", columnNames[numColumns - 1]);
+		if(columnNames[numColumns - 1][strlen(columnNames[numColumns - 1])] == '\n'){
+			printf("misplaced newline in the last character of last string\n");
+		}
+	}
 	// print out column names for testing
-	if(DEBUG){ for(i = 0; i < numColumns; i++){ printf("column: %s at number %d\n", columnNames[i], i); } }
+	if(DEBUG){ 
+		for(i = 0; i < numColumns; i++){ 
+			printf("column: %s at number %d\n", columnNames[i], i); 
+			if(columnNames[i][strlen(columnNames[i] - 1)] == '\n'){
+					printf("misplaced newline in the last character of last string\n");
+			}
+		} 
+	}
+
 
 	// now want to read in a row and put appropriate data in fields for the row object
 	// to read in a row, we start at new line or EOF
@@ -519,14 +575,20 @@ int main(int argc, char **argv){
 	moviesLL->rear = currMovie;
 	moviesLL->size = 1;
 	bool quotationMark = false;
+	char individualMovieLine[500];
+	int movieLineCharacterIndex = 0;
 	if(DEBUG2){ printf("Line %d\n", __LINE__);}
 	while(read(0, &buffer, 1) != 0){
 		if(buffer == '"'){
 			quotationMark = !quotationMark;
+			individualMovieLine[movieLineCharacterIndex] = buffer;
+			movieLineCharacterIndex++;
 			continue;
 		}
 		if (buffer == ',' && !quotationMark)
 		{
+			individualMovieLine[movieLineCharacterIndex] = buffer;
+			movieLineCharacterIndex++;
 			// fill out the struct field based on this info
 			currCellText[currCellTextIndex] = '\0';
 			currCellTextIndex = 0;
@@ -537,14 +599,19 @@ int main(int argc, char **argv){
 		}
 		if(buffer == '\n'){
 			// complete the current movie and make the next one
-			currCellText[currCellTextIndex] = '\0';
+			individualMovieLine[movieLineCharacterIndex] = '\0';
+			movieLineCharacterIndex = 0;
+			currCellText[currCellTextIndex - 1] = '\0';
 			currCellTextIndex = 0;
 			addFieldToMovie(cellNumber, columnNames, currMovie, currCellText);
 			cellNumber = 0;
 			currCellText[0] = '\0';
+			if(DEBUG2){printf("%s\n", individualMovieLine);}
 
 			movieLine* newMovie = malloc(sizeof(movieLine));
 			initMovieLine(newMovie);
+			addFieldToMovie(-1, columnNames, currMovie, individualMovieLine);
+			//strcpy(currMovie->csvLine, individualMovieLine);
 			moviesLL->rear = newMovie;
 			currMovie->next = newMovie;
 			currMovie = newMovie;
@@ -553,14 +620,20 @@ int main(int argc, char **argv){
 
 		currCellText[currCellTextIndex] = buffer;
 		currCellTextIndex++;
+		individualMovieLine[movieLineCharacterIndex] = buffer;
+		movieLineCharacterIndex++;
 
 	}
 
 	// deal with the last character
-	currCellText[currCellTextIndex] = '\0';
-	addFieldToMovie(cellNumber, columnNames, currMovie, currCellText);
+	//currCellText[currCellTextIndex] = '\0';
+	//addFieldToMovie(cellNumber, columnNames, currMovie, currCellText);
+	//strcpy(currMovie->csvLine, individualMovieLine);
 
-	//printMoviesAsCsv(moviesLL, numColumns, columnNames);
+
+	printMoviesAsCsv(moviesLL, numColumns, columnNames);
+
+
 
 
 	return 0;
