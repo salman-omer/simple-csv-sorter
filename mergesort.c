@@ -1,28 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "simpleCSVsorter.h"
 
-//sorts the csv linked list - recursive fn
-void mergeSort(struct movieLine** ptrHead, char *strInput, double numInput)
-{
-    struct movieLine* head = ptrHead;
-    struct movieLine* x;
-    struct movieLine* y;
-
-    if (head == NULL || head->next == NULL)     //base case for recursive call
-    {
-        return;
-    }
-
-    split(head, &x, &y);
-
-    mergeSort(&x, strInput, numInput);      //recursive call on mergeSort for each parts
-    mergeSort(&y, strInput, numInput);
-
-    *source = merge(x, y);
-}
-
-struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput, double numInput)
+struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput, char *numInput)   //parameters are column names - Strings
 {
     struct movieLine* result = NULL;
 
@@ -36,8 +17,10 @@ struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput
     }
 
     //check if sorting string types or number types
-    if (strInput == NULL)
+    if (strInput == NULL)       //checking all int/double column name types
     {
+
+        /* C cannot do this
         if (x->numInput <= y->numInput)
         {
             result = x;
@@ -47,8 +30,192 @@ struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput
             result = y;
             result->next = merge(x, y->next, strInput, numInput);
         }
-    }else if (numInput == NULL)
+        */
+        if (strcmp(numInput, "num_critic_for_reviews") == 0)
+        {
+            if (x->num_critic_for_reviews <= y->num_critic_for_reviews)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "duration") == 0)
+        {
+            if (x->duration <= y->duration)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "director_facebook_likes") == 0)
+        {
+            if (x->director_facebook_likes <= y->director_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "actor_3_facebook_likes") == 0)
+        {
+            if (x->actor_3_facebook_likes <= y->actor_3_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "actor_1_facebook_likes") == 0)
+        {
+            if (x->actor_1_facebook_likes <= y->actor_1_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "gross") == 0)
+        {
+            if (x->gross <= y->gross)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "num_voted_users") == 0)
+        {
+            if (x->num_voted_users <= y->num_voted_users)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "cast_total_facebook_likes") == 0)
+        {
+            if (x->cast_total_facebook_likes <= y->cast_total_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "facenumber_in_poster") == 0)
+        {
+            if (x->facenumber_in_poster <= y->facenumber_in_poster)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "num_user_for_reviews") == 0)
+        {
+            if (x->num_user_for_reviews <= y->num_user_for_reviews)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "budget") == 0)
+        {
+            if (x->budget <= y->budget)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "title_year") == 0)
+        {
+            if (x->title_year <= y->title_year)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "actor_2_facebook_likes") == 0)
+        {
+            if (x->actor_2_facebook_likes <= y->actor_2_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "imdb_score") == 0)
+        {
+            if (x->imdb_score <= y->imdb_score)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "aspect_ratio") == 0)
+        {
+            if (x->aspect_ratio <= y->aspect_ratio)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(numInput, "movie_facebook_likes") == 0)
+        {
+            if (x->movie_facebook_likes <= y->movie_facebook_likes)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else
+        {
+            printf("HOW DID U GET HERE? - not possible (ROUND 1)\n\n");
+        }
+
+
+    }else if (numInput == NULL)     //checking all string column name types
     {
+        /* Does not work in  C
         if (strcmp(x->strInput, y->strInput) <= 0)
         {
             result = x;
@@ -58,6 +225,146 @@ struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput
             result = y;
             result->next = merge(x, y->next, strInput, numInput);
         }
+        */
+
+        if (strcmp(strInput, "color") == 0)
+        {
+            if (strcmp(x->color, y->color) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "director_name") == 0)
+        {
+            if (strcmp(x->director_name, y->director_name) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "actor_2_name") == 0)
+        {
+            if (strcmp(x->actor_2_name, y->actor_2_name) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "genres") == 0)
+        {
+            if (strcmp(x->genres, y->genres) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "actor_1_name") == 0)
+        {
+            if (strcmp(x->actor_1_name, y->actor_1_name) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "movie_title") == 0)
+        {
+            if (strcmp(x->movie_title, y->movie_title) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "actor_3_name") == 0)
+        {
+            if (strcmp(x->actor_3_name, y->actor_3_name) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "plot_keywords") == 0)
+        {
+            if (strcmp(x->plot_keywords, y->plot_keywords) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "movie_imdb_link") == 0)
+        {
+            if (strcmp(x->movie_imdb_link, y->movie_imdb_link) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "language") == 0)
+        {
+            if (strcmp(x->language, y->language) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "country") == 0)
+        {
+            if (strcmp(x->country, y->country) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else if (strcmp(strInput, "content_rating") == 0)
+        {
+            if (strcmp(x->content_rating, y->content_rating) <= 0)
+            {
+                result = x;
+                result->next = merge(x->next, y, strInput, numInput);
+            }else
+            {
+                result = y;
+                result->next = merge(x, y->next, strInput, numInput);
+            }
+        }else
+        {
+            printf("HOW DID U GET HERE? - not possible (ROUND 2)\n\n");
+        }
+
+
     }else
     {
         printf("TEMPORARY ERROR FLAG");
@@ -91,7 +398,25 @@ void split(struct movieLine* source, struct movieLine** ptrFront, struct movieLi
     slow->next = NULL;      //end partitioning
 }
 
+//sorts the csv linked list - recursive fn
+void mergeSort(struct movieLine** ptrHead, char *strInput, char *numInput)
+{
+    struct movieLine* head = *ptrHead;
+    struct movieLine* x;
+    struct movieLine* y;
 
+    if (head == NULL || head->next == NULL)     //base case for recursive call
+    {
+        return;
+    }
+
+    split(head, &x, &y);
+
+    mergeSort(&x, strInput, numInput);      //recursive call on mergeSort for each parts
+    mergeSort(&y, strInput, numInput);
+
+    *ptrHead = merge(x, y, strInput, numInput);
+}
 
 /*
 
