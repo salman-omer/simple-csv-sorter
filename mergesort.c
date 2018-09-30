@@ -318,10 +318,12 @@ struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput
         {
             if (strcmp(trim(x->movie_title), trim(y->movie_title)) <= 0)
             {
+                printf("\n x bef: %s, y bef: %s.\t x aft: %s, y aft: %s.\t result: Smaller\n", x->movie_title, y->movie_title, trim(x->movie_title), trim(y->movie_title));
                 result = x;
                 result->next = merge(x->next, y, strInput, numInput);
             }else
             {
+                printf("\n x bef: %s, y bef: %s.\t x aft: %s, y aft: %s.\t result: Bigger\n", x->movie_title, y->movie_title, trim(x->movie_title), trim(y->movie_title));
                 result = y;
                 result->next = merge(x, y->next, strInput, numInput);
             }
