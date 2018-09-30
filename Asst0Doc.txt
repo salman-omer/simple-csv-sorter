@@ -3,6 +3,7 @@ Design:
 Assumptions:
 
 Difficulties:
+o Working with '\n' because it kept giving us weird errors 
 
 Testing procedures:
 
