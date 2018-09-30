@@ -54,6 +54,8 @@ void printArray(char *A[], int size)
 }
 */
 
+
+
 int printMoviesAsCsv(movieLine* head, int numColumns, char** columnNames){
 	int i;
 	for (i = 0; i < numColumns; ++i)
@@ -389,6 +391,18 @@ main(int argc, char *argv[]){
 
             }
 
+            
+            movieLine* currIter = moviesLL->head;
+            while(currIter->next != NULL){
+            	if(currIter->next->movie_title == NULL){
+            		moviesLL->rear = currIter;
+            		free(currIter->next);
+            		currIter->next = NULL;
+            		break;
+            	}
+            	currIter = currIter->next;
+            } 
+
             // deal with the last character
             //currCellText[currCellTextIndex] = '\0';
             //addFieldToMovie(cellNumber, columnNames, currMovie, currCellText);
@@ -397,6 +411,9 @@ main(int argc, char *argv[]){
             printf("\n\n\n\n\nBefore Sorting!\n\n\n\n\n");
             printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
+
+
+			            
             if ((strcmp(argv[2], "color") == 0) || (strcmp(argv[2], "director_name") == 0) || (strcmp(argv[2], "actor_2_name") == 0) || (strcmp(argv[2], "genres") == 0) || (strcmp(argv[2], "actor_1_name") == 0) || (strcmp(argv[2], "movie_title") == 0) || (strcmp(argv[2], "actor_3_name") == 0) || (strcmp(argv[2], "plot_keywords") == 0) || (strcmp(argv[2], "movie_imdb_link") == 0) || (strcmp(argv[2], "language") == 0) || (strcmp(argv[2], "country") == 0) || (strcmp(argv[2], "content_rating") == 0))
             {
                 //all char * cases
@@ -415,7 +432,9 @@ main(int argc, char *argv[]){
 
             printf("\n\n\n\n\nAfter Sorting!\n\n\n\n\n");
             printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
-            //printf("SUCCESS!\n\n");
+	
+            
+            //printf("SUCCESS!\n\n"); 
         }else{
             printf("Usage: simpleCSVsorter -c <column name>\n\n");
         }
