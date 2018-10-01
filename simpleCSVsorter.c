@@ -6,7 +6,7 @@
 
 typedef enum { false, true } bool;
 
-const int DEBUG = 0;
+const int DEBUG = 1;
 const int DEBUG2 = 0;
 
 // arg: pointer to movieLine
@@ -87,6 +87,46 @@ int printMoviesAsCsv(movieLine* head, int numColumns, char** columnNames){
 		curr = curr->next;
 	}
 	return 0;
+}
+
+// arg: movieline pointer
+// ret: 0 if it is an empty node, 1 if it has any data
+int hasNoFields(movieLine* movie){
+	if(movie->color == NULL &&
+		movie->director_name == NULL &&
+		movie->num_critic_for_reviews == -1 &&
+		movie->duration == -1 &&
+		movie->director_facebook_likes == -1 &&
+		movie->actor_3_facebook_likes == -1 &&
+		movie->actor_2_name == NULL &&
+		movie->actor_1_facebook_likes == -1 &&
+		movie->gross == -1 &&
+		movie->genres == NULL &&
+		movie->actor_1_name == NULL &&
+		movie->movie_title == NULL &&
+		movie->num_voted_users == -1 &&
+		movie->cast_total_facebook_likes == -1 &&
+		movie->actor_3_name == NULL &&
+		movie->facenumber_in_poster == -1 &&
+		movie->plot_keywords == NULL &&
+		movie->movie_imdb_link == NULL &&
+		movie->num_user_for_reviews == -1 &&
+		movie->language == NULL &&
+		movie->country == NULL &&
+		movie->content_rating == NULL &&
+		movie->budget == -1 &&
+		movie->title_year == -1 &&
+		movie->actor_2_facebook_likes == -1 &&
+		movie->imdb_score == -1 &&
+		movie->aspect_ratio == -1 &&
+		movie->movie_facebook_likes == -1 &&
+		movie->next == NULL &&
+		movie->csvLine == NULL){
+		return 0;
+	} else{
+		return 1;
+	}
+
 }
 
 /* arg: column number, array of column headers, movie line pointer, string to add at that column
@@ -435,7 +475,7 @@ int main(int argc, char *argv[]){
 
             movieLine* currIter = moviesLL->head;
             while(currIter->next != NULL){
-            	if(currIter->next->movie_title == NULL){
+            	if(hasNoFields(currIter->next) == 0){
             		moviesLL->rear = currIter;
             		free(currIter->next);
             		currIter->next = NULL;
@@ -453,54 +493,21 @@ int main(int argc, char *argv[]){
             //printf("\n\n\n\n\nBefore Sorting!\n\n\n\n\n");
             //printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
-            int counter = 0;
-
             if ((strcmp(argv[2], "color") == 0) || (strcmp(argv[2], "director_name") == 0) || (strcmp(argv[2], "actor_2_name") == 0) || (strcmp(argv[2], "genres") == 0) || (strcmp(argv[2], "actor_1_name") == 0) || (strcmp(argv[2], "movie_title") == 0) || (strcmp(argv[2], "actor_3_name") == 0) || (strcmp(argv[2], "plot_keywords") == 0) || (strcmp(argv[2], "movie_imdb_link") == 0) || (strcmp(argv[2], "language") == 0) || (strcmp(argv[2], "country") == 0) || (strcmp(argv[2], "content_rating") == 0))
             {
                 //all char * cases
                 //printf("COLUMN NAME type is String!\n\n");
-                for (i = 0; i < numColumns; i++)
-                {
-                    //printf("%s\n", columnNames[i]);
-                    if (strcmp(argv[2], columnNames[i]) == 0)   //case when there are only subsets of column names
-                    {
-                        counter = 1;
-                        break;
-                    }
-                }
-                if (counter == 1)   //sort only if the column name actually exists
-                {
-                    mergeSort(&(moviesLL->head), argv[2], NULL);
+                mergeSort(&(moviesLL->head), argv[2], NULL);
 
-                    printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
-                }else
-                {
-                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
-                }
+                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
             }else if ((strcmp(argv[2], "num_critic_for_reviews") == 0) || (strcmp(argv[2], "duration") == 0) || (strcmp(argv[2], "director_facebook_likes") == 0) || (strcmp(argv[2], "actor_3_facebook_likes") == 0) || (strcmp(argv[2], "actor_1_facebook_likes") == 0) || (strcmp(argv[2], "gross") == 0) || (strcmp(argv[2], "num_voted_users") == 0) || (strcmp(argv[2], "cast_total_facebook_likes") == 0) || (strcmp(argv[2], "facenumber_in_poster") == 0) || (strcmp(argv[2], "num_user_for_reviews") == 0) || (strcmp(argv[2], "budget") == 0) || (strcmp(argv[2], "title_year") == 0) || (strcmp(argv[2], "actor_2_facebook_likes") == 0) || (strcmp(argv[2], "imdb_score") == 0) || (strcmp(argv[2], "aspect_ratio") == 0) || (strcmp(argv[2], "movie_facebook_likes") == 0))
             {
                 //all int + double cases
                 //printf("COLUMN NAME type is int/double!\n\n");
-                for (i = 0; i < numColumns; i++)
-                {
-                    //printf("%s\n", columnNames[i]);
-                    if (strcmp(argv[2], columnNames[i]) == 0)   //case when there are only subsets of column names
-                    {
-                        counter = 1;
-                        break;
-                    }
-                }
-                if (counter == 1)   //sort only if the column name actually exists
-                {
-                    mergeSort(&(moviesLL->head), NULL, argv[2]);
+                mergeSort(&(moviesLL->head), NULL, argv[2]);
 
-                    printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
-                }else
-                {
-                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
-                }
-
+                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
             }else
             {
                 printf("INVALID COLUMN NAME!\n\n");
