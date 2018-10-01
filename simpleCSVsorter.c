@@ -6,7 +6,7 @@
 
 typedef enum { false, true } bool;
 
-const int DEBUG = 1;
+const int DEBUG = 0;
 const int DEBUG2 = 0;
 
 // arg: pointer to movieLine
@@ -515,7 +515,7 @@ int main(int argc, char *argv[]){
                     printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
                 }else
                 {
-                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
+                    printf("ERROR: INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
                 }
 
 
@@ -539,11 +539,11 @@ int main(int argc, char *argv[]){
                     printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
                 }else
                 {
-                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
+                    printf("ERROR: INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
                 }
             }else
             {
-                printf("INVALID COLUMN NAME!\n\n");
+                printf("ERROR: INVALID COLUMN NAME!\n\n");
             }
 
             //After sorting!
@@ -556,7 +556,7 @@ int main(int argc, char *argv[]){
         }
     }else {
 //        fprintf(stderr, "\nERROR: ENTER IN CORRECT NUMBER OF ARGUMENTS\n");   - same error statement but with stderr
-        printf("\nERROR: ENTER IN CORRECT NUMBER OF ARGUMENTS\n");
+        printf("ERROR: ENTER IN CORRECT NUMBER OF ARGUMENTS!\n\n");
     }
     return 0;
 }
