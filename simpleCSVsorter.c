@@ -115,19 +115,27 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "director_name", value); }
 	}
 	else if (strcmp(columnName, "num_critic_for_reviews") == 0){
-		movie->num_critic_for_reviews = atoi(value);
+		if(value[0] != '\0'){
+			movie->num_critic_for_reviews = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "num_critic_for_reviews", atoi(value)); }
 	}
 	else if (strcmp(columnName, "duration") == 0){
-		movie->duration = atoi(value);
+		if(value[0] != '\0'){
+			movie->duration = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "duration", atoi(value)); }
 	}
 	else if (strcmp(columnName, "director_facebook_likes") == 0){
-		movie->director_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->director_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "director_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_3_facebook_likes") == 0){
-		movie->actor_3_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->actor_3_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "actor_3_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_2_name") == 0){
@@ -136,12 +144,16 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "actor_2_name", value); }
 	}
 	else if (strcmp(columnName, "actor_1_facebook_likes") == 0){
-		movie->actor_1_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->actor_1_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "actor_1_facebook_likes", atoi(value)); }
 
 	}
 	else if (strcmp(columnName, "gross") == 0){
-		movie->gross = atoi(value);
+		if(value[0] != '\0'){
+			movie->gross = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "gross", atoi(value)); }
 	}
 	else if (strcmp(columnName, "genres") == 0){
@@ -160,11 +172,15 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "movie_title", value); }
 	}
 	else if (strcmp(columnName, "num_voted_users") == 0){
-		movie->num_voted_users = atoi(value);
+		if(value[0] != '\0'){
+			movie->num_voted_users = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "num_voted_users", atoi(value)); }
 	}
 	else if (strcmp(columnName, "cast_total_facebook_likes") == 0){
-		movie->cast_total_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->cast_total_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "cast_total_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_3_name") == 0){
@@ -173,7 +189,9 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "actor_3_name", value); }
 	}
 	else if (strcmp(columnName, "facenumber_in_poster") == 0){
-		movie->facenumber_in_poster = atoi(value);
+		if(value[0] != '\0'){
+			movie->facenumber_in_poster = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "facenumber_in_poster", atoi(value)); }
 	}
 	else if (strcmp(columnName, "plot_keywords") == 0){
@@ -187,7 +205,9 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "movie_imdb_link", value); }
 	}
 	else if (strcmp(columnName, "num_user_for_reviews") == 0){
-		movie->num_user_for_reviews = atoi(value);
+		if(value[0] != '\0'){
+			movie->num_user_for_reviews = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "num_user_for_reviews", atoi(value)); }
 	}
 	else if (strcmp(columnName, "language") == 0){
@@ -206,27 +226,39 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 		if (DEBUG) { printf("%s %s\n", "content_rating", value); }
 	}
 	else if (strcmp(columnName, "budget") == 0){
-		movie->budget = atoi(value);
+		if(value[0] != '\0'){
+			movie->budget = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "budget", atoi(value)); }
 	}
 	else if (strcmp(columnName, "title_year") == 0){
-		movie->title_year = atoi(value);
+		if(value[0] != '\0'){
+			movie->title_year = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "title_year", atoi(value)); }
 	}
 	else if (strcmp(columnName, "actor_2_facebook_likes") == 0){
-		movie->actor_2_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->actor_2_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "actor_2_facebook_likes", atoi(value)); }
 	}
 	else if (strcmp(columnName, "imdb_score") == 0){
-		movie->imdb_score = atof(value);
+		if(value[0] != '\0'){
+			movie->imdb_score = atof(value);
+		}
 		if (DEBUG) { printf("%s %f\n", "imdb_score", atof(value)); }
 	}
 	else if (strcmp(columnName, "aspect_ratio") == 0){
-		movie->aspect_ratio = atof(value);
+		if(value[0] != '\0'){
+			movie->aspect_ratio = atof(value);
+		}
 		if (DEBUG) { printf("%s %f\n", "aspect_ratio", atof(value)); }
 	}
 	else if (strcmp(columnName, "movie_facebook_likes") == 0){
-		movie->movie_facebook_likes = atoi(value);
+		if(value[0] != '\0'){
+			movie->movie_facebook_likes = atoi(value);
+		}
 		if (DEBUG) { printf("%s %d\n", "movie_facebook_likes", atoi(value)); }
 	}
 	return 0;
