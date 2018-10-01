@@ -9,6 +9,9 @@ typedef enum { false, true } bool;
 const int DEBUG = 0;
 const int DEBUG2 = 0;
 
+// arg: pointer to movieLine
+// ret 0 if completed
+// this function intializes all the values for a movieline pointer
 int initMovieLine(movieLine* movie){
 	movie-> color = NULL;
 	movie-> director_name = NULL;
@@ -55,7 +58,10 @@ void printArray(char *A[], int size)
 */
 
 
-
+/* arg: head of LL. number of columns, column headers
+* ret: 0 if completed
+* prints the movmies as a csv to stdout
+*/
 int printMoviesAsCsv(movieLine* head, int numColumns, char** columnNames){
 	int i;
 	for (i = 0; i < numColumns; ++i)
@@ -83,6 +89,10 @@ int printMoviesAsCsv(movieLine* head, int numColumns, char** columnNames){
 	return 0;
 }
 
+/* arg: column number, array of column headers, movie line pointer, string to add at that column
+* ret 0 if completed
+* adds data to the movie based on what kind of column it corresponds to
+*/
 int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char* value){
 	// special case for csvline denoted by column number -1
 	if(columnNumber < 0){
@@ -222,8 +232,7 @@ int addFieldToMovie(int columnNumber, char** columnNames, movieLine* movie, char
 	return 0;
 }
 
-int
-main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
     //check if there are correct # of argument inputs
     if (argc == 3){
         //check if command is correct
