@@ -453,21 +453,54 @@ int main(int argc, char *argv[]){
             //printf("\n\n\n\n\nBefore Sorting!\n\n\n\n\n");
             //printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
+            int counter = 0;
+
             if ((strcmp(argv[2], "color") == 0) || (strcmp(argv[2], "director_name") == 0) || (strcmp(argv[2], "actor_2_name") == 0) || (strcmp(argv[2], "genres") == 0) || (strcmp(argv[2], "actor_1_name") == 0) || (strcmp(argv[2], "movie_title") == 0) || (strcmp(argv[2], "actor_3_name") == 0) || (strcmp(argv[2], "plot_keywords") == 0) || (strcmp(argv[2], "movie_imdb_link") == 0) || (strcmp(argv[2], "language") == 0) || (strcmp(argv[2], "country") == 0) || (strcmp(argv[2], "content_rating") == 0))
             {
                 //all char * cases
                 //printf("COLUMN NAME type is String!\n\n");
-                mergeSort(&(moviesLL->head), argv[2], NULL);
+                for (i = 0; i < numColumns; i++)
+                {
+                    //printf("%s\n", columnNames[i]);
+                    if (strcmp(argv[2], columnNames[i]) == 0)   //case when there are only subsets of column names
+                    {
+                        counter = 1;
+                        break;
+                    }
+                }
+                if (counter == 1)   //sort only if the column name actually exists
+                {
+                    mergeSort(&(moviesLL->head), argv[2], NULL);
 
-                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
+                    printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
+                }else
+                {
+                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
+                }
 
             }else if ((strcmp(argv[2], "num_critic_for_reviews") == 0) || (strcmp(argv[2], "duration") == 0) || (strcmp(argv[2], "director_facebook_likes") == 0) || (strcmp(argv[2], "actor_3_facebook_likes") == 0) || (strcmp(argv[2], "actor_1_facebook_likes") == 0) || (strcmp(argv[2], "gross") == 0) || (strcmp(argv[2], "num_voted_users") == 0) || (strcmp(argv[2], "cast_total_facebook_likes") == 0) || (strcmp(argv[2], "facenumber_in_poster") == 0) || (strcmp(argv[2], "num_user_for_reviews") == 0) || (strcmp(argv[2], "budget") == 0) || (strcmp(argv[2], "title_year") == 0) || (strcmp(argv[2], "actor_2_facebook_likes") == 0) || (strcmp(argv[2], "imdb_score") == 0) || (strcmp(argv[2], "aspect_ratio") == 0) || (strcmp(argv[2], "movie_facebook_likes") == 0))
             {
                 //all int + double cases
                 //printf("COLUMN NAME type is int/double!\n\n");
-                mergeSort(&(moviesLL->head), NULL, argv[2]);
+                for (i = 0; i < numColumns; i++)
+                {
+                    //printf("%s\n", columnNames[i]);
+                    if (strcmp(argv[2], columnNames[i]) == 0)   //case when there are only subsets of column names
+                    {
+                        counter = 1;
+                        break;
+                    }
+                }
+                if (counter == 1)   //sort only if the column name actually exists
+                {
+                    mergeSort(&(moviesLL->head), NULL, argv[2]);
 
-                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
+                    printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
+                }else
+                {
+                    printf("INPUTTED COLUMN NAME DOES NOT EXIST!\n\n");
+                }
+
             }else
             {
                 printf("INVALID COLUMN NAME!\n\n");
