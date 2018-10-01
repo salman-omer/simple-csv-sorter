@@ -1,10 +1,38 @@
 Design:
+This program is meant to work with the movie_metadata.csv that was provided in the project description. As such, it specifically takes in the columns that are provided in the csv and in the project description such as direct_name, actor_facebook_likes etc.
 
-Assumptions:
+To store the data, the program uses a movieLine structure which acts as nodes in a linked list. These nodes have all the possible data values precoded as possible variables for csv line. First, the column headers line in csv is read and stored in the columnNames array which is allocated memory dynamically. Then, each line of the csv is read one after another. While a line is being read, a correspoding movieLine struct has its fields updated with the appropriate values. The struct itself stores the data with all corresponding whitespace attached as seen in the original csv file. This is all kept track of in a movieLinesLL struct which keeps track of the head of the linked list and the total size. The fact that it keeps track of the head helps out later when we do the merge sort.
+
+The merge sort is programmed to work on two different data types, strings and numbers. Both ints and doubles are represented as doubles for the purpose of the merge sort. This program does a traditional merge sort on a linked list by sorting the objects in ascending order through a recursive algorithm. The merge sort keep track of the head object in the original linked list so that it can be accessed later.
+
+Finally, the linked list is printed out in its entirity. First, the line with the column headers is printed out. Next, the corresponding csvline is printed out for each of the movieLine structs. These structs also happen to have a field csvLine. This is  a field that saves the csvLine exactly as it appeared in the original csv. This is not a data type that can be sorted on, but it makes it easier to print out the sorted csv in the end.
+
+
+
+Assumptions and how to make an all purpose CSV sorter (extra credit):
+We assume that the column headers and their corresponding data types are as given in the project description. In order to not make this assumption, we would need to be given another meta data file with a list of column names and data types corresponding to those column names. With this information, we could make a program that accomadates any possible csv. This would require a few changes in our program. One change is how we store the data in our movieLine struct. Instead of having an individual field for each predefined column, we would instead use an array of strings whose size could be dynamically created depending on how many columns were inputted. Then we would need to have a structure which would store the column names and its corresponding data type as numeric or string. This could be done through either a 2d array where the first column would have the column names and the second column would have the corresponding data types. Another way this could be done is through a 1 dimensional array that only saves the data types. The index of the data type in this array would correspond to the appropriate column. This would save a marginal amount of space but would not effect performance much. Lastly, we would have to adapt our merge sort to reference this data types structure so that it could do the necessary conversions on the data itself. Since the data would be saved as a string no matter what, it becomes important to have of a way of figuring out how to do the conversion. This could be sped up through the use of a hashmap in which the column name/number is the key and the data type is the value.
+
+
+
 
 Difficulties:
-o Working with '\n' because it kept giving us weird errors 
+We had many difficulties with particular characters and cases. For instance, the originally provided csv has a \n character at the end of the file. Originally, we did not accomodate for this so the program would segfault every time it reached the end of the file. We adapted our program to respond to two cases, one in which there was an empty line at the end and one in which there was.
+
+Another difficulty that came up was values not being saved properly. This had to do with the way we were comparing strings and dynamically allocating memory. This is an issue that comes up often with C programming so it is something that we were able to eventually debug and iron out.
+
+A major help in debugging this project was the use of unix commands that allowed us to quickly compare our actual results with expected results. This made it much faster to find issues in the code itself and pinpointing exactly when they occurred.
+
+
+
 
 Testing procedures:
+We tested by creating a smaller csv file and then sorting on that. In this way we were able to check by eye if things were occuring the way we meant them to. After ironing out all the bugs in the small testing csv, we moved to the larger file and debugged our program to work with that file in its entirety.
+
+
+
 
 How to use our code:
+Use our code using the procedure given in the project description document. This is using cat movie_metadata.csv | ./simpleCSVsorter -c "columnName". This can be outputted directly to stdout or be put in a file as desired. It is made to emulate the state of the movie_metadata.csv format to the character.
+
+
+
