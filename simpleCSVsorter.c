@@ -15,32 +15,32 @@ const int DEBUG2 = 0;
 int initMovieLine(movieLine* movie){
 	movie-> color = NULL;
 	movie-> director_name = NULL;
-	movie-> num_critic_for_reviews = 0;
-	movie-> duration = 0;
-	movie-> director_facebook_likes = 0;
-	movie-> actor_3_facebook_likes = 0;
+	movie-> num_critic_for_reviews = -1;
+	movie-> duration = -1;
+	movie-> director_facebook_likes = -1;
+	movie-> actor_3_facebook_likes = -1;
 	movie-> actor_2_name = NULL;
-	movie-> actor_1_facebook_likes = 0;
-	movie-> gross = 0;
+	movie-> actor_1_facebook_likes = -1;
+	movie-> gross = -1;
 	movie-> genres = NULL;
 	movie-> actor_1_name = NULL;
 	movie-> movie_title = NULL;
-	movie-> num_voted_users = 0;
-	movie-> cast_total_facebook_likes = 0;
+	movie-> num_voted_users = -1;
+	movie-> cast_total_facebook_likes = -1;
 	movie-> actor_3_name = NULL;
-	movie-> facenumber_in_poster = 0;
+	movie-> facenumber_in_poster = -1;
 	movie-> plot_keywords = NULL;
 	movie-> movie_imdb_link = NULL;
-	movie-> num_user_for_reviews = 0;
+	movie-> num_user_for_reviews = -1;
 	movie-> language = NULL;
 	movie-> country = NULL;
 	movie-> content_rating = NULL;
-	movie-> budget = 0;
-	movie-> title_year = 0;
-	movie-> actor_2_facebook_likes = 0;
-	movie-> imdb_score = 0;
-	movie-> aspect_ratio = 0;
-	movie-> movie_facebook_likes = 0;
+	movie-> budget = -1;
+	movie-> title_year = -1;
+	movie-> actor_2_facebook_likes = -1;
+	movie-> imdb_score = -1;
+	movie-> aspect_ratio = -1;
+	movie-> movie_facebook_likes = -1;
 	movie->next = NULL;
 	movie->csvLine = NULL;
 	return 0;
@@ -400,7 +400,7 @@ int main(int argc, char *argv[]){
 
             }
 
-            
+
             movieLine* currIter = moviesLL->head;
             while(currIter->next != NULL){
             	if(currIter->next->movie_title == NULL){
@@ -410,40 +410,42 @@ int main(int argc, char *argv[]){
             		break;
             	}
             	currIter = currIter->next;
-            } 
+            }
 
             // deal with the last character
             //currCellText[currCellTextIndex] = '\0';
             //addFieldToMovie(cellNumber, columnNames, currMovie, currCellText);
             //strcpy(currMovie->csvLine, individualMovieLine);
 
-            printf("\n\n\n\n\nBefore Sorting!\n\n\n\n\n");
-            printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
+            //Before sorting!
+            //printf("\n\n\n\n\nBefore Sorting!\n\n\n\n\n");
+            //printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
-
-
-			            
             if ((strcmp(argv[2], "color") == 0) || (strcmp(argv[2], "director_name") == 0) || (strcmp(argv[2], "actor_2_name") == 0) || (strcmp(argv[2], "genres") == 0) || (strcmp(argv[2], "actor_1_name") == 0) || (strcmp(argv[2], "movie_title") == 0) || (strcmp(argv[2], "actor_3_name") == 0) || (strcmp(argv[2], "plot_keywords") == 0) || (strcmp(argv[2], "movie_imdb_link") == 0) || (strcmp(argv[2], "language") == 0) || (strcmp(argv[2], "country") == 0) || (strcmp(argv[2], "content_rating") == 0))
             {
                 //all char * cases
-                printf("COLUMN NAME type is String!\n\n");
+                //printf("COLUMN NAME type is String!\n\n");
                 mergeSort(&(moviesLL->head), argv[2], NULL);
+
+                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
 
             }else if ((strcmp(argv[2], "num_critic_for_reviews") == 0) || (strcmp(argv[2], "duration") == 0) || (strcmp(argv[2], "director_facebook_likes") == 0) || (strcmp(argv[2], "actor_3_facebook_likes") == 0) || (strcmp(argv[2], "actor_1_facebook_likes") == 0) || (strcmp(argv[2], "gross") == 0) || (strcmp(argv[2], "num_voted_users") == 0) || (strcmp(argv[2], "cast_total_facebook_likes") == 0) || (strcmp(argv[2], "facenumber_in_poster") == 0) || (strcmp(argv[2], "num_user_for_reviews") == 0) || (strcmp(argv[2], "budget") == 0) || (strcmp(argv[2], "title_year") == 0) || (strcmp(argv[2], "actor_2_facebook_likes") == 0) || (strcmp(argv[2], "imdb_score") == 0) || (strcmp(argv[2], "aspect_ratio") == 0) || (strcmp(argv[2], "movie_facebook_likes") == 0))
             {
                 //all int + double cases
-                printf("COLUMN NAME type is int/double!\n\n");
+                //printf("COLUMN NAME type is int/double!\n\n");
                 mergeSort(&(moviesLL->head), NULL, argv[2]);
+
+                printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
             }else
             {
                 printf("INVALID COLUMN NAME!\n\n");
             }
 
-            printf("\n\n\n\n\nAfter Sorting!\n\n\n\n\n");
-            printMoviesAsCsv(moviesLL->head, numColumns, columnNames);
-	
-            
-            //printf("SUCCESS!\n\n"); 
+            //After sorting!
+            //printf("\n\n\n\n\nAfter Sorting!\n\n\n\n\n");
+
+            free(columnNames);
+            //printf("SUCCESS!\n\n");
         }else{
             printf("Usage: simpleCSVsorter -c <column name>\n\n");
         }

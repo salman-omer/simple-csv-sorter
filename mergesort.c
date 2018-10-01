@@ -5,7 +5,7 @@
 
 char *trim(char *str)
 {
-    int index = 0, i = 0;
+    int index = 0, i = 0, counter = 0;
 
     while (str[index] == ' ' || str[index] == '\n' || str[index] == '\t')
     {
@@ -25,12 +25,21 @@ char *trim(char *str)
         if (str[i] == ' ' || str[i] == '\n' || str[i] == '\t')
         {
             index = i;
+            counter++;
+        }else
+        {
+            counter = 0;
         }
         i++;
     }
-    str[index] = '\0';  //remove trailing spaces
 
-//    printf("\n%s\n\n", str);
+    //printf("\nBefore: %s.\n", str);
+    //printf("\nCounter: %d.\n", counter);
+    if (counter >= 1)
+    {
+        str[index - counter + 1] = '\0';  //remove trailing spaces
+    }
+    //printf("\nAfter: %s.\n", str);
 //    free(str);
     return str;
 }
@@ -274,10 +283,12 @@ struct movieLine* merge(struct movieLine* x, struct movieLine* y, char *strInput
         {
             if (strcmp(trim(x->director_name), trim(y->director_name)) <= 0)
             {
+                //printf("\n x bef: %s, y bef: %s.\t x aft: %s, y aft: %s.\t result: Smaller\n", x->director_name, y->director_name, trim(x->director_name), trim(y->director_name));
                 result = x;
                 result->next = merge(x->next, y, strInput, numInput);
             }else
             {
+                //printf("\n x bef: %s, y bef: %s.\t x aft: %s, y aft: %s.\t result: Bigger\n", x->director_name, y->director_name, trim(x->director_name), trim(y->director_name));
                 result = y;
                 result->next = merge(x, y->next, strInput, numInput);
             }
