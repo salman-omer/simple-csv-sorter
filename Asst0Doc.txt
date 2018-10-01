@@ -27,7 +27,12 @@ A major help in debugging this project was the use of unix commands that allowed
 
 Testing procedures:
 We tested by creating a smaller csv file and then sorting on that. In this way we were able to check by eye if things were occuring the way we meant them to. After ironing out all the bugs in the small testing csv, we moved to the larger file and debugged our program to work with that file in its entirety.
-
+We created 3 test files:
+1. test.csv which was used to test our program with small inputs.
+2. test1.csv which was used to test if it works well with less inputs and less column names.
+3. test2.csv which was used to test if it works properly with subsets of column names rather than full set of column names as given. + check if its working properly with string inputs that have trailing and leading spaces when comparing.
+4. movie_metadata.csv was used at the end to test that our program works for what is intended to do.
+We believe that we tested pretty much all the possible edge cases there can be to test our program.
 
 
 
